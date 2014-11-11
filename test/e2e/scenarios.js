@@ -18,7 +18,16 @@ describe('app', function() {
 
 
     it('should display persons', function() {
-      expect(true).toBe(true);
+      var personList = element.all(by.repeater('person in persons'));
+
+      expect(personList.count()).toBe(5);
+    });
+
+    it('should render person specific links', function() {
+      element.all(by.css('table td a')).first().click();
+      browser.getLocationAbsUrl().then(function(url) {
+        expect(url.split('#')[1]).toBe('/persons/1');
+      });
     });
   });
 
@@ -31,7 +40,7 @@ describe('app', function() {
 
 
     it('should display person', function() {
-      expect(true).toBe(true);
+      expect(element(by.binding('person.name')).getText()).toBe('John Smith');
     });
   });
 });
